@@ -1419,3 +1419,15 @@ def test_tool_without_implementation_error_matches_sync_and_async():
     assert tool_results(sync_chain) == [
         ("no_impl", 'Error: tool "no_impl" has no implementation'),
     ]
+
+
+def test_async_conversation_prompt_inherits_tools():
+    def double(x: int) -> int:
+        return x * 2
+
+    model = llm.get_async_model("echo")
+    conversation = model.conversation(tools=[double])
+    response = conversation.prompt("hi")
+    assert response.prompt.tools is not None
+    assert len(response.prompt.tools) == 1
+    assert response.prompt.tools[0].name == "double"
