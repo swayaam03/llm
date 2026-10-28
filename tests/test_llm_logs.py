@@ -1484,6 +1484,7 @@ def test_logs_markdown_omits_reasoning_heading_when_empty(log_path):
     result = runner.invoke(cli, ["logs", "-p", str(log_path)], catch_exceptions=False)
     assert result.exit_code == 0
     assert "## Reasoning" not in result.output
+<<<<<<< HEAD
     assert "<details>" not in result.output
 
 
@@ -1536,6 +1537,14 @@ def test_logs_conversations_empty(db_factory, user_path):
     runner = CliRunner()
     db_path = str(user_path / "empty_logs.db")
     db = db_factory(db_path)
+=======
+
+
+def test_logs_conversations_empty(user_path):
+    runner = CliRunner()
+    db_path = str(user_path / "empty_logs.db")
+    db = sqlite_utils.Database(db_path)
+>>>>>>> 1ef51a7c0d84bdc5849fad346ff04bbb928eed7e
     migrate(db)
     result = runner.invoke(cli, ["logs", "conversations", "-d", db_path])
     assert result.exit_code == 0
@@ -1547,10 +1556,17 @@ def test_logs_conversations_empty(db_factory, user_path):
     assert json.loads(result_json.output) == []
 
 
+<<<<<<< HEAD
 def test_logs_conversations_threads(db_factory, user_path):
     runner = CliRunner()
     db_path = str(user_path / "threads_logs.db")
     db = db_factory(db_path)
+=======
+def test_logs_conversations_threads(user_path):
+    runner = CliRunner()
+    db_path = str(user_path / "threads_logs.db")
+    db = sqlite_utils.Database(db_path)
+>>>>>>> 1ef51a7c0d84bdc5849fad346ff04bbb928eed7e
     migrate(db)
     db["threads"].insert({
         "id": "thread-12345",
@@ -1588,10 +1604,17 @@ def test_logs_conversations_threads(db_factory, user_path):
     assert data[0]["name"] == "Analyze financial report"
 
 
+<<<<<<< HEAD
 def test_logs_conversations_filter_and_count(db_factory, user_path):
     runner = CliRunner()
     db_path = str(user_path / "multi_threads_logs.db")
     db = db_factory(db_path)
+=======
+def test_logs_conversations_filter_and_count(user_path):
+    runner = CliRunner()
+    db_path = str(user_path / "multi_threads_logs.db")
+    db = sqlite_utils.Database(db_path)
+>>>>>>> 1ef51a7c0d84bdc5849fad346ff04bbb928eed7e
     migrate(db)
     for i in range(5):
         tid = f"conv-{i}"
@@ -1620,10 +1643,17 @@ def test_logs_conversations_filter_and_count(db_factory, user_path):
     assert data[0]["id"] == "conv-3"
 
 
+<<<<<<< HEAD
 def test_logs_conversations_legacy(db_factory, user_path):
     runner = CliRunner()
     db_path = str(user_path / "legacy_convs.db")
     db = db_factory(db_path)
+=======
+def test_logs_conversations_legacy(user_path):
+    runner = CliRunner()
+    db_path = str(user_path / "legacy_convs.db")
+    db = sqlite_utils.Database(db_path)
+>>>>>>> 1ef51a7c0d84bdc5849fad346ff04bbb928eed7e
     migrate(db)
     db["conversations"].insert({
         "id": "legacy-abc",
